@@ -8,8 +8,6 @@ const cors = require('cors')
 const categories = require('./routes/categories')
 
 const app = express()
-//TODO: This is temporary, it must be an environment variable
-const uri = 'mongodb+srv://clothe:clothe@cluster0.4jegc.mongodb.net/clothestore?retryWrites=true&w=majority'
 
 //Plugins
 app.use(bodyParser.json())
