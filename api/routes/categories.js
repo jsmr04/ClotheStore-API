@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-  Category.findOne(req.params.id)
+  Category.findOne({ _id: req.params.id })
     .exec()
     .then((x) => res.status(200).send(x));
 });

@@ -6,6 +6,7 @@ const cors = require('cors')
 
 //Routes
 const categories = require('./routes/categories')
+const storage = require('./routes/storage')
 
 const app = express()
 
@@ -18,9 +19,7 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser:true, useUnifiedTopolo
 
 //Apply routes
 app.use('/api/categories', categories)
+app.use('/api/storage', storage)
 
-// app.get('*', (req, res)=>{
-//     res.send('HELLO!')
-// })
 
 module.exports = app
