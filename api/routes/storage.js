@@ -3,14 +3,8 @@ const { v2: cloudinary } = require("cloudinary");
 
 const router = express.Router();
 
-//TODO: a environment variable must be used here
-//cloudinary.config(JSON.parse(process.env.CLOUDINARY_CONFIG));
-cloudinary.config({
-    cloud_name: "clothestore",
-    api_key: "777218474427326",
-    api_secret: "ZVFwj0S5HeRDkO8FBy8i--OVXJA",
-  });
-//CLOUDINARY_CONFIG
+//Cloudinary configuration
+cloudinary.config(JSON.parse(process.env.CLOUDINARY_CONFIG));
 
 router.post("/", (req, res) => {
   uploadFileToCloudinary(req.body.folder, req.body.base64string).then((x) => {
