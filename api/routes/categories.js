@@ -1,6 +1,7 @@
 const express = require("express");
 const { getDate } = require("../../helpers");
 const Category = require("../models/Category");
+const { isAuthenticated } = require('../auth')
 
 const router = express.Router();
 
