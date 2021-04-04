@@ -11,6 +11,7 @@ const User = mongoose.model('User', new Schema({
     address: String,
     state: String,
     country: String,
+    city: String,
     zip:  String,
     url: String,
     active: { type: Boolean, default: true }, 

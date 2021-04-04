@@ -12,6 +12,8 @@ const Product = mongoose.model('Product', new Schema({
     price: Number,
     active: { type:Boolean, default: true }, 
     pictures: [{ name:String, url:String }]
+}, {
+    timestamps:true
 }))
 
 module.exports = Product

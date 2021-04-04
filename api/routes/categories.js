@@ -18,19 +18,21 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  Category.create({ ...req.body, dateTime: getDate() }).then((x) =>
+  Category.create(req.body).then((x) =>
     res.status(200).send(x)
   );
 });
 
 router.put("/:id", (req, res) => {
-  Category.findOneAndUpdate(req.params.id, req.body)
+  console.log(req.params.id)
+  console.log(req.body)
+  Category.findByIdAndUpdate(req.params.id, req.body)
     .exec()
     .then(() => res.sendStatus(204));
 });
 
 router.delete("/:id", (req, res) => {
-  Category.findOneAndRemove(req.params.id)
+  Category.findByIdAndRemove(req.params.id)
     .exec()
     .then(() => res.sendStatus(204));
 });

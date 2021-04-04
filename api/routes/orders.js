@@ -22,13 +22,13 @@ router.post("/", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
-    Order.findOneAndUpdate(req.params.id, req.body)
+    Order.findByIdAndUpdate(req.params.id, req.body)
     .exec()
     .then(() => res.sendStatus(204));
 });
 
 router.delete("/:id", (req, res) => {
-    Order.findOneAndRemove(req.params.id)
+    Order.findByIdAndRemove(req.params.id)
     .exec()
     .then(() => res.sendStatus(204));
 });

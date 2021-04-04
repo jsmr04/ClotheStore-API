@@ -73,6 +73,8 @@ router.post("/signin", (req, res) => {
           if (user.password === encryptedPassword) {
             const token = signToken(user._id);
             return res.send({ _id:user._id, token });
+          }else{
+            return res.status(400).send("User and password do not match");
           }
         }
       );
@@ -86,6 +88,7 @@ router.put("/user-info/", (req, res) => {
   const address = req.body.address;
   const state = req.body.state;
   const country = req.body.country;
+  const city = req.body.city;
   const zip = req.body.zip;
   const url = req.body.url;
 
@@ -95,9 +98,12 @@ router.put("/user-info/", (req, res) => {
     address,
     state,
     country,
+    city,
     zip,
     url,
   };
+
+  console.log(userData)
 
   User.findOne({ email }).then((user) => {
     if (user) {
@@ -105,7 +111,7 @@ router.put("/user-info/", (req, res) => {
         res.sendStatus(200);
       });
     } else {
-      res.status(400).send("User does not exist");
+      res.status(400).send("User does not exist")
     }
   });
 });
@@ -124,6 +130,7 @@ router.get("/user-info/", (req, res) => {
           updatedAt: user.updatedAt,
           address: user.address,
           country: user.country,
+          city: user.city,
           state: user.state,
           url: user.url,
           active: user.active,
@@ -157,6 +164,7 @@ router.get("/user-info/:id", (req, res) => {
         updatedAt: user.updatedAt,
         address: user.address,
         country: user.country,
+        city: user.city,
         state: user.state,
         url: user.url,
         active: user.active,
