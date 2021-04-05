@@ -15,6 +15,12 @@ router.get("/:id", (req, res) => {
     .then((x) => res.status(200).send(x));
 });
 
+router.get("/byuser/:id", (req, res) => {
+    Order.find({ user_id: req.params.id })
+    .exec()
+    .then((x) => res.status(200).send(x));
+});
+
 router.post("/", (req, res) => {
     Order.create(req.body).then((x) =>
     res.status(200).send(x)
