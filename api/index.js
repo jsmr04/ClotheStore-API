@@ -27,6 +27,6 @@ app.use('/api/storage', storage)
 app.use('/api/auth', auth)
 app.use('/api/products', products)
 app.use('/api/orders', orders)
-app.use('/api/statisticts', statistics)
+app.use('/api/statistics', statistics)
 
 module.exports = app

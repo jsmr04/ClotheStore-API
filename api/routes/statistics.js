@@ -3,6 +3,8 @@ const Category = require("../models/Category");
 const Product = require("../models/Product");
 const Order = require("../models/Order");
 
+var moment = require('moment');  
+
 const router = express.Router();
 
 router.get("/sales/products", async (req, res) => {
@@ -119,5 +121,76 @@ router.get("/sales/categories", async (req, res) => {
   //summarySalesByCategory
   res.status(200).json(summarySalesByCategory);
 });
+
+router.get("/chart/orders-overview", async (req, res) => {
+  const completed = await Order.find({ status: "COMPLETED" }).count().exec();
+  const pending = await Order.find({ status: "PENDING" }).count().exec();
+  const ready = await Order.find({ status: "READY" }).count().exec();
+  const shipped = await Order.find({ status: "SHIPPED" }).count().exec();
+
+  const result = [
+    {x: "Pending", y: pending},
+    {x: "Ready", y: ready},
+    {x: "Completed", y: completed},
+    {x: "Shipped", y: shipped},
+  ]
+
+  res.status(200).json(result);
+});
+
+router.get("/chart/sales-overview", async (req, res) => {
+ 
+  let orders;
+
+  const newOrders = await Order.aggregate(
+    [
+      {
+        $group: {
+          _id: { $dateToString: { format: "%m", date: "$createdAt" } },
+          total: { $sum: "$total" }
+        }
+      }
+    ],function (err, result) {
+      if (err) {
+          console.log(err);
+          return;
+      }
+      orders = result;
+  });
+
+  let ordersDefault = [
+    { x: 'Jan', y: 0 },
+    { x: 'Feb', y: 0 },
+    { x: 'Mar', y: 0 },
+    { x: 'Apr', y: 0 },
+    { x: 'May', y: 0 },
+    { x: 'Jun', y: 0 },
+    { x: 'Jul', y: 0 },
+    { x: 'Aug', y: 0 },
+    { x: 'Sep', y: 0 },
+    { x: 'Oct', y: 0 },
+    { x: 'Nov', y: 0 },
+    { x: 'Dez', y: 0 },
+  ]
+
+  let result = [];
+
+  ordersDefault.forEach((order) => {
+    orders.forEach((x) => {
+      if(order.x === moment(x._id).format("MMM")){
+        let tmp = {
+          x: moment(x._id).format("MMM"),
+          y: x.total
+        }
+        result.push(tmp)
+      } else {
+        result.push(order)
+      }
+    })
+  })
+
+  res.status(200).json(result);
+});
+
 
 module.exports = router;
