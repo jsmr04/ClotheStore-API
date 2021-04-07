@@ -13,6 +13,7 @@ const Order = mongoose.model('Order', new Schema({
     email: String,
     fullName: String,
     items: [{ product_id:{ type: Schema.Types.ObjectId, ref: 'User' }, 
+              code: String, 
               name: String, 
               price: Number, 
               quantity: Number, 

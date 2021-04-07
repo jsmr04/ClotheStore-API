@@ -10,11 +10,12 @@ const storage = require('./routes/storage')
 const auth = require('./routes/auth')
 const products = require('./routes/products')
 const orders = require('./routes/orders')
+const statistics = require('./routes/statistics')
 
 const app = express()
 
 //Plugins
-app.use(bodyParser.json())
+app.use(bodyParser.json( { limit: '50mb' } ) )
 app.use(cors())
 
 //Connect to mongo atlas
@@ -26,5 +27,6 @@ app.use('/api/storage', storage)
 app.use('/api/auth', auth)
 app.use('/api/products', products)
 app.use('/api/orders', orders)
+app.use('/api/statisticts', statistics)
 
 module.exports = app

@@ -10,7 +10,7 @@ router.post("/", (req, res) => {
   uploadFileToCloudinary(req.body.folder, req.body.base64string).then((x) => {
       console.log(x)
     if (x.public_id) {
-      res.status(200).send({ id: x.public_id, url: x.secure_url });
+      res.status(200).json({ id: x.public_id, url: x.secure_url });
     } else {
       res.status(400).send(x);
     }
